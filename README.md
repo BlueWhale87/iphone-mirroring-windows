@@ -32,6 +32,7 @@ The investigation used AI-assisted tooling through REA 6.4.0 and Ghidra 12.1.4, 
 
 - [Session and protocol map](docs/protocol-map.md)
 - [Windows compatibility and next experiment](docs/windows-compatibility.md)
+- [Enrollment and authorization follow-up](docs/authentication.md)
 - [Methods and evidence limitations](docs/methodology.md)
 - [Research log](docs/research-log.md)
 - [Findings ledger](evidence/findings.json)
@@ -44,6 +45,6 @@ Public evidence is a curated export of observation summaries, selected redacted 
 
 ## Next experiment
 
-Trace the enrollment and authorization chain behind `SFAuthenticationManager`: the origin of authorization material, persistent host trust and any device/account binding. A viable independently reproducible enrollment path would justify a minimal Windows authentication probe. Video codec, framing, protection, HID bytes, coordinate transforms and text payloads remain open questions.
+The [authentication follow-up](docs/authentication.md) now identifies the local authorization representation, separate pairing/authentication requests, the Sharing service boundary and selected long-term-key/AppleKeyStore session operations. The next question is whether an independently enrolled software host can satisfy the current iPhone's key and attestation policy. A viable path would justify a minimal Windows authentication probe. Video codec, framing, protection, HID bytes, coordinate transforms and text payloads remain open questions.
 
 Pointers to prior work on Mac-unlock pairing, Rapport remote-display enrollment and AWDL transport are welcome through [GitHub discussions in issues](https://github.com/BlueWhale87/iphone-mirroring-windows/issues). See [contribution guidance](CONTRIBUTING.md).

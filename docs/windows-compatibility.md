@@ -24,6 +24,8 @@ The iPhone reference is 16 Pro, iOS 27.0 (24A437); Mac/app identities and physic
 
 ## Smallest justified next experiment
 
+**Follow-up update:** the [authorization investigation](authentication.md) has now identified the local context representation, request types, XPC dispatch and selected long-term-key/AKS session boundaries. The steps below describe the initial experiment; remaining work now focuses on the current enrollment attestation/certificate policy, complete operation ordering and the iPhone-side verifier. No Windows-origin acceptance has been demonstrated.
+
 **Question:** What produces the authorization passed to remote authentication, and what persistent host trust does SFAuthenticationManager use for this already-enrolled Mac?
 
 1. Follow the concrete SFAuthenticationManager reference from SharingBackedAuthenticationPrimitives into the source-bound Sharing framework and its client/service interfaces. Preserve the same cache identity and hashes. Recover the `pairDeviceForMacUnlock` and `unlockWithAuthenticationToken` coroutine continuations, and LocalAuthenticationManager's authorization-producing path. Read mechanisms and metadata; credential values are unnecessary.

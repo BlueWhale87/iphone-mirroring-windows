@@ -11,3 +11,11 @@ Extracted-image decompilation has imported-stub/no-return defects. Selected orig
 Outcome: a candidate reconstruction path with unresolved enrollment, authentication and transport. No Windows-origin session has run and no platform incompatibility has been proven.
 
 Next: trace the SFAuthenticationManager/Sharing authorization and enrollment chain before designing a minimal Windows probe. See the [compatibility assessment](windows-compatibility.md).
+
+### Enrollment and authorization follow-up
+
+Traced selected externalized LocalAuthentication context calls, authentication types 5/6, and the adapter's authorization-token/device-ID options. Sharing forwards enrollment/authentication through `com.apple.sharingd.nsxpc`. The daemon checks a Mac-local entitlement before dispatch; that check is not an iPhone platform requirement.
+
+Located conditional local/attested long-term-key selection and concrete AppleKeyStore session creation, token and step calls. The full current-flow route, attestation policy, enrollment transcript and iPhone verifier remain incomplete. New findings include explicit confidence and interpretation limits.
+
+Next: current iPhone long-term-key/attestation acceptance for an independently enrolled software host. See the [follow-up report](authentication.md).

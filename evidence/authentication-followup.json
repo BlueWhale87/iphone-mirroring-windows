@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-14",
+  "scope": "Curated static follow-up export. Original local records named in sources are not distributed; this export is not original REA Evidence.",
+  "artifacts": {
+    "sharing-macho.json": {
+      "evidence_id": "ev_5e6ea6edc05bbbc44eb6b7c228ea6edd84a156ed8b8f296116aea8f35be023b2",
+      "sha256": "f747a780574dfd23433640d0101de28708a768b11a31d523be39c6d0de15f93b",
+      "declared_architectures": {
+        "items": [
+          {
+            "name": "arm64e",
+            "cpu_type": null,
+            "cpu_subtype": null,
+            "file_offset": null,
+            "size": null,
+            "alignment": null
+          }
+        ],
+        "total": 1,
+        "exhaustive": true,
+        "limitations": []
+      },
+      "uuid": "920D8AA6-CDCD-3E0F-AD66-F0673ACABD3F"
+    },
+    "sharingd-macho.json": {
+      "evidence_id": "ev_61ca3529f619d5c37da9b28d93f449f698e3445a1d352d132cd7abf07a1d455a",
+      "sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+      "declared_architectures": {
+        "items": [
+          {
+            "name": "arm64e",
+            "cpu_type": null,
+            "cpu_subtype": null,
+            "file_offset": null,
+            "size": null,
+            "alignment": null
+          }
+        ],
+        "total": 1,
+        "exhaustive": true,
+        "limitations": []
+      },
+      "uuid": "D547B79C-1EB7-3A1C-A9A2-20D3D1BE6A7F"
+    }
+  },
+  "observations": [
+    {
+      "id": "authorization-producer",
+      "status": "partial",
+      "kind": "static",
+      "confidence": "high for the selected success-handler calls; incomplete for the full authorization policy",
+      "conclusion": "LocalAuthenticationManager success paths invoke externalizedContext and bridge the result to Data/continuations.",
+      "sources": [
+        {
+          "original_local_record": "local-authorization-success.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x26739c884"
+        },
+        {
+          "original_local_record": "../screensharingkit-objc-stub-selector-map.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e"
+        }
+      ],
+      "limits": [
+        "No credential contents obtained.",
+        "Context creation/evaluation policy and full asynchronous dataflow remain incomplete."
+      ]
+    },
+    {
+      "id": "pairing-vs-authentication",
+      "status": "answered for these call sites",
+      "kind": "static",
+      "confidence": "high: exact argument constants, selectors and indexed description strings are corroborated",
+      "conclusion": "Pairing request uses authentication type 5 (MacUnlockPhonePairing); ordinary authentication uses type 6 (MacUnlockPhone). Authorization data and IDS device ID are set in SFAuthenticationOptions. Authentication values are not control-protocol version numbers.",
+      "sources": [
+        {
+          "original_local_record": "pairing-request-body.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x2673a1498"
+        },
+        {
+          "original_local_record": "unlock-request-body.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x2673a23bc, 0x2673a23ec, 0x2673a25d0"
+        },
+        {
+          "original_local_record": "authentication-type-map.json",
+          "binary_sha256": "f747a780574dfd23433640d0101de28708a768b11a31d523be39c6d0de15f93b",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x19613f454"
+        }
+      ],
+      "limits": [
+        "This is the Mac-local request API, not the peer message layout."
+      ]
+    },
+    {
+      "id": "sharing-service-dispatch",
+      "status": "answered for the selected local dispatch",
+      "kind": "static",
+      "confidence": "high: method bodies, selector targets and Mach-service constant agree",
+      "conclusion": "Sharing connects to com.apple.sharingd.nsxpc and forwards requestEnablementUsingClientProxy and authenticateUsingClientProxy through an unlock-manager XPC proxy.",
+      "sources": [
+        {
+          "original_local_record": "sharing-request-enrollment-xpc-block.json",
+          "binary_sha256": "f747a780574dfd23433640d0101de28708a768b11a31d523be39c6d0de15f93b",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x196142220"
+        },
+        {
+          "original_local_record": "sharing-authenticate-xpc-block.json",
+          "binary_sha256": "f747a780574dfd23433640d0101de28708a768b11a31d523be39c6d0de15f93b",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x196142a3c"
+        },
+        {
+          "original_local_record": "sharing-mach-service.json",
+          "binary_sha256": "f747a780574dfd23433640d0101de28708a768b11a31d523be39c6d0de15f93b",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x1960b1134"
+        }
+      ],
+      "limits": [
+        "No new runtime-observed call stack."
+      ]
+    },
+    {
+      "id": "daemon-local-gate",
+      "status": "answered for the selected Mac-local gate",
+      "kind": "static",
+      "confidence": "high: current-connection query and entitlement constant corroborated in code",
+      "conclusion": "SDUnlockXPCSession checks com.apple.private.sharing.unlock-manager on the current Mac XPC connection before forwarding requests to SDAuthenticationManager.",
+      "sources": [
+        {
+          "original_local_record": "daemon-entitlement-check.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x10000b160"
+        },
+        {
+          "original_local_record": "daemon-entitlement-name.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e"
+        },
+        {
+          "original_local_record": "daemon-authentication-queue-block.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x10000a260"
+        }
+      ],
+      "limits": [
+        "A Mac-local entitlement gate does not establish iPhone-side platform checks."
+      ]
+    },
+    {
+      "id": "ltk-session-boundary",
+      "status": "partial",
+      "kind": "static",
+      "confidence": "high for key-selection/session-construction calls; incomplete for current-flow reachability and policy",
+      "conclusion": "Pairing and authorization constructors select a local or local-attested long-term key and look up a remote key by device ID. Selected authorization branches pass an external ACM context to session construction.",
+      "sources": [
+        {
+          "original_local_record": "aks-authorization-constructor.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x1000beb28"
+        },
+        {
+          "original_local_record": "aks-pairing-constructor.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x1000be064"
+        }
+      ],
+      "limits": [
+        "No keys read or transplanted.",
+        "Precise current enrollment attestation/certificate policy remains unresolved."
+      ]
+    },
+    {
+      "id": "aks-crypto-boundaries",
+      "status": "partial",
+      "kind": "static",
+      "confidence": "high for selected resolved helper/import calls; incomplete for a full peer protocol",
+      "conclusion": "Authorization setup reaches aks_remote_session; selected token/step methods reach aks_remote_session_token and aks_remote_session_step through native helpers.",
+      "sources": [
+        {
+          "original_local_record": "aks-authorization-setup.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x1000e7df4"
+        },
+        {
+          "original_local_record": "aks-native-session-creation.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x1001650d4"
+        },
+        {
+          "original_local_record": "aks-native-token-helper.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x100165c3c"
+        },
+        {
+          "original_local_record": "aks-native-step-helper.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "procedure_or_call": "0x100165e60"
+        },
+        {
+          "original_local_record": "sharingd-import-stub-map.json",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e"
+        }
+      ],
+      "limits": [
+        "Complete type-6-to-flow route and operation ordering not established.",
+        "Crypto internals, transcript and peer verifier are not recovered."
+      ]
+    },
+    {
+      "id": "macunlock-flow-metadata",
+      "status": "partial",
+      "kind": "static",
+      "confidence": "moderate: selected metadata names/fields are useful seeds, while formatting/offset defects limit interpretation",
+      "conclusion": "Production MacUnlockPhone flow metadata contains AKS managers and request/response/token/confirmation contexts, including an authorization-token input.",
+      "sources": [
+        {
+          "original_local_record": "sharingd-swift.txt",
+          "binary_sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+          "architecture": "arm64e",
+          "line": 3315
+        }
+      ],
+      "limits": [
+        "Metadata does not establish operation execution or wire fields.",
+        "Corrupt or suspicious ivar offsets are excluded."
+      ]
+    },
+    {
+      "id": "independent-windows-host",
+      "status": "unresolved",
+      "kind": "inference",
+      "confidence": "unknown for acceptance: no fresh software-host enrollment or iPhone verifier test exists",
+      "conclusion": "Local authorization/service/key boundaries are mapped more precisely. Windows acceptance still requires independently reproducible enrollment and a compatible key/attestation exchange.",
+      "sources": [],
+      "limits": [
+        "No Windows-origin session.",
+        "No current iPhone-side attestation/long-term-key policy recovered."
+      ]
+    }
+  ],
+  "external_reference": {
+    "title": "Apple Platform Security \u2014 Automatically unlock Apple devices",
+    "url": "https://support.apple.com/guide/security/automatically-unlock-apple-devices-sec6ab47ebfc/web",
+    "published_date": "2026-01-28",
+    "access_date": "2026-10-14",
+    "scope": "Documented architecture; current peer policy and software-host acceptance remain untested."
+  },
+  "provider_limits": [
+    "Ghidra Sharing procedure search exceeded the 180-second provider timeout; native disassembly and REA metadata were used instead.",
+    "Verbose daemon metadata has invalid text/suspicious Swift offsets; those offsets are not evidence."
+  ],
+  "next_question": "What current iPhone long-term-key/attestation checks must an independently enrolled software host satisfy?"
+}
