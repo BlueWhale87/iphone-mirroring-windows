@@ -30,4 +30,4 @@ If current peer policy permits software-held keys, direct Windows interoperabili
 
 ## Next check
 
-Trace modern/current mirroring enrollment into the peer's long-term-key acceptance and attestation failure handling. The encrypted SEP payload and complete verifier remain unrecovered. No new pairing, private-key export or device-protection change was performed.
+A [subsequent current-stack pass](current-enrollment.md) recovered the referenced framework, its type-5 attestation policy and selected driver boundaries. Trace live Mirroring flow selection and complete peer long-term-key acceptance and attestation failure handling. The encrypted SEP payload and complete verifier remain unrecovered. No new pairing, private-key export or device-protection change was performed.

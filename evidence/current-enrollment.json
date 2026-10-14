@@ -1,0 +1,166 @@
+{
+  "date": "2026-10-14",
+  "scope": "Curated static research export; original local records and Apple binaries are not distributed. No independent host acceptance test.",
+  "version": "27.0",
+  "build": "24A437",
+  "cache_uuid": "E0B5BDE5-0A07-3924-B762-8E411A50080C",
+  "parent_systemos": {
+    "size": 6023020544,
+    "sha256": "136e443c0000aed8ef0b8ec5bdc34ee5c2e25c4775a525d692b645012215d27b",
+    "sha384": "feb1566afdbfdc1a687052c6429f0d054e742c64900736686486a11b386beaffb6157ffb5c547f3d89cf3491984d5f66",
+    "manifest_Cryptex1_SystemOS_digest_match": true
+  },
+  "artifacts": [
+    {
+      "name": "AutoUnlockDaemon",
+      "original_path": "/System/Library/PrivateFrameworks/AutoUnlockDaemon.framework/AutoUnlockDaemon",
+      "uuid": "9101224B-C61B-3211-8F2E-E543C6E647E8",
+      "sha256": "fcb9e8f67ce51fddaf9d8f21ced0576f803e0499c9e7a74b3c98d5ae30ca105b",
+      "bytes": 40631160,
+      "rea_evidence_id": "ev_988d11d35c55f6c83e7f61ad97d25d4d4ce1d7c4f96f40ae134601a74577cf95",
+      "original_text_bytes_equal": true,
+      "text_bytes": 1843420,
+      "text_sha256": "6493f2fb992b8da98e447a386d0b4148799897589455dd58b1d4e6df1c5289c9",
+      "source_cache_file": "dyld_shared_cache_arm64e.48",
+      "extractor": "ipsw 3.1.737",
+      "transformation": "dyld extract --slide --objc --stubs"
+    },
+    {
+      "name": "AppleKeyStore",
+      "original_path": "/System/Library/PrivateFrameworks/AppleKeyStore.framework/AppleKeyStore",
+      "uuid": "D76FDC32-F322-381B-9B37-CCED46998B4B",
+      "sha256": "4102bd2e9f0ab96e3575e75e02cb5cefbea781f4b9629445ac618175135be467",
+      "bytes": 899560,
+      "rea_evidence_id": "ev_7ffc6b03d244dd4fd67ae6061695fc9cf23dc4b492b8ea101447b6ce022ce528",
+      "original_text_bytes_equal": true,
+      "text_bytes": 404788,
+      "text_sha256": "6209b4e4fdd4c2a980a2af6934a6be07919e3d32d4a8f4494367ccc4593192c5",
+      "source_cache_file": "dyld_shared_cache_arm64e.42",
+      "extractor": "ipsw 3.1.737",
+      "transformation": "dyld extract --slide --objc"
+    },
+    {
+      "name": "AutoUnlock",
+      "original_path": "/System/Library/PrivateFrameworks/AutoUnlock.framework/AutoUnlock",
+      "uuid": "D094A38F-7DDB-383B-BCA3-F75693AB6415",
+      "sha256": "12cb9035792700a72b48dfb9723fd96c74e4e210d5f01d9a8f9fccd9c09a7ae3",
+      "bytes": 122056,
+      "rea_evidence_id": "ev_43057a492583032561a05589b189a701175a354fcfe98fbb57ca7b679e3b0d09",
+      "original_text_bytes_equal": true,
+      "text_bytes": 10620,
+      "text_sha256": "5eba96396ea65feb342efd3982eaef9715aae4756cdc186a3509c265f8dad889",
+      "source_cache_file": "dyld_shared_cache_arm64e.48",
+      "extractor": "ipsw 3.1.737",
+      "transformation": "dyld extract --slide --objc"
+    },
+    {
+      "name": "SharingCore",
+      "original_path": "/System/Library/PrivateFrameworks/SharingCore.framework/SharingCore",
+      "uuid": "F3F0BF31-DAA9-3D28-AB9B-9CF03029251A",
+      "sha256": "2316052b6f6e4ce07208f72000751bdb7c78eee958ee0f0e9ebf9f592afbd8b9",
+      "bytes": 187200,
+      "rea_evidence_id": "ev_697fdf730a4318cb678f2c5e7db0a046df73b09f7d30d43c604988ebef1c66c2",
+      "original_text_bytes_equal": true,
+      "text_bytes": 64744,
+      "text_sha256": "4032045a34145d55fa84441c186967df83ae12801e98219c928901ac888a091d",
+      "source_cache_file": "dyld_shared_cache_arm64e.42",
+      "extractor": "ipsw 3.1.737",
+      "transformation": "dyld extract --slide --objc"
+    }
+  ],
+  "observations": [
+    {
+      "id": "ce-001",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "The iPhone client enablement block reaches the daemon enrollment adapter, which queues a closure calling AutoUnlockDaemon.SDAuthenticationManager.enable.",
+      "sources": [
+        "iphone-xpc-enable.json:0x1000e96a0",
+        "iphone-enable-adapter.json:0x10059f0d4",
+        "iphone-enable-helper.json:0x10059ece4",
+        "iphone-enable-closure.json:0x1005a4bf4",
+        "iphone-framework-enable-stub.json:0x1006b3c1c"
+      ],
+      "limitations": [
+        "This is a static client-facing route, not a traced live remote request or current Mirroring execution."
+      ]
+    },
+    {
+      "id": "ce-002",
+      "status": "answered",
+      "evidence_type": "static",
+      "conclusion": "The selected current framework enable implementation passes its external authentication type through conversion helper 0x255befb68. Its table maps external 5 to internal 5. The requiresAttestation getter uses mask 0x1800f8 and returns true for internal types 5 and 6.",
+      "sources": [
+        "framework-enable-body.json:0x255cff268",
+        "framework-enable-conversion-candidate.json:0x255befb68",
+        "framework-requires-attestation.json:0x255d9cf20",
+        "source cache bytes:0x255dc0100"
+      ],
+      "limitations": [
+        "The policy getter alone does not establish complete live-path enforcement or accepted certificate issuers."
+      ]
+    },
+    {
+      "id": "ce-003",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Current framework contains an executor route as well as compatibility AKS pairing classes. supportsExecutor returns true for type 5; the Feature.requiresAttestation getter returns true unconditionally. The selected compatibility exchange method also computes requiresAttestation from its named type field before calling the AKS manager pairing constructor.",
+      "sources": [
+        "framework-supports-executor.json:0x255d9d3e4",
+        "framework-feature-requires-attestation.json:0x255cbbd40",
+        "framework-exchange-implementation.json:0x255c5ae64",
+        "framework-selected-selector-stubs.json:0x25807d7e0",
+        "autounlockdaemon-cache-swift.txt:LTKSession and MacUnlockPhonePairing types",
+        "autounlockdaemon-symbols-swift.txt:AKSPairingSession ivar list 0x2764d8bd8"
+      ],
+      "limitations": [
+        "Actual flow selection and complete routing through the newer executor remain unresolved; compatibility class reachability must not stand in for it."
+      ]
+    },
+    {
+      "id": "ce-004",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "The selected AKSUtilities generator has ordinary and attested branches. Its attested branch obtains DCRT through a helper calling MAECopyDCRTWithOptions, constructs AKSRefKeyParams, and calls aks_create_signing_key_with_params. This is not evidence that the ordinary branch is a permitted Mirroring fallback.",
+      "sources": [
+        "framework-generate-local-ltk.json:0x255c242f0",
+        "framework-generate-local-ltk.json:0x255c24604",
+        "framework-dcrt-getter.json:0x255c4f218",
+        "framework-symbol-name-map.json"
+      ],
+      "limitations": [
+        "Complete executor caller-to-generator value flow remains unresolved. Firmware/activation code inspection does not produce device private keys."
+      ]
+    },
+    {
+      "id": "ce-005",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Selected current framework registration/session boundaries call aks_remote_peer_setup. The exact iPhone AppleKeyStore wrapper selects operation 0x2e and reaches an outlined dispatch helper ending at an IOConnectCallMethod stub. Complete certificate and attestation policy below that boundary is not recovered.",
+      "sources": [
+        "framework-reg-lock-peer-setup.json:0x255cc0f84",
+        "framework-new-aks-session-peer-setup.json:0x255c18934",
+        "applekeystore-peer-setup.json:0x23ecda5b0",
+        "applekeystore-peer-setup-body.json:0x23ecda010",
+        "applekeystore-operation-dispatch-helper.json:0x23ec7de08",
+        "applekeystore-operation-dispatch-symbol.txt:0x2401117f0"
+      ],
+      "limitations": [
+        "Registration/session setup is not itself a recovered certificate verifier. API names, success branches and an ordinary-key utility do not demonstrate software-host acceptance."
+      ]
+    }
+  ],
+  "unresolved": [
+    "Current live Mirroring request-to-executor flow and complete value flow",
+    "Complete iPhone attestation certificate acceptance and any permitted alternative enrollment",
+    "Windows-origin fresh-key enrollment and locked-phone control"
+  ],
+  "validation": {
+    "passed": true,
+    "instructions_checked": 9716,
+    "unique_instruction_locations": 9566,
+    "all_selected_text_sections_equal_original_cache": true,
+    "type_5_conversion_table_value": 5,
+    "scope": "Static selected source bytes only; no live iPhone policy or Windows acceptance test. Counts include duplicate saved dossiers."
+  }
+}

@@ -31,3 +31,9 @@ Exact iOS 27.0 build 24A437 metadata, kernel, AppleSEPKeyStore driver and encryp
 Storage cleanup removed about 10.9 GB of regenerable caches. Obtained exact-build iPhone sharingd from a verified, decrypted, read-only filesystem image. The manifest OS digest covers the decrypted image; independent ZIP size/CRC checks bind the encrypted carrier.
 
 Selected legacy pairing lock-session code returns an attestation flag and passes requiresAttestation=1; its constructor selects an attested local key. Current mirroring reachability and complete peer acceptance remain unverified. See [the next checks](secure-enclave-options.md).
+
+### Current iPhone enrollment framework
+
+Recovered AutoUnlockDaemon and referenced key-service dependencies from the exact-build SystemOS shared cache. Selected code sections match their cache sources. The current external-to-internal table maps type 5 to 5; its attestation policy bit is set. An executor route exists alongside compatibility classes, so live flow selection remains an explicit gap.
+
+Selected attested key generation obtains DCRT and invokes the parameterized AKS generator. Selected peer-setup wrappers reach the iPhone driver interface. Complete verifier policy and fresh Windows acceptance remain unverified. See [the current enrollment report](current-enrollment.md).
