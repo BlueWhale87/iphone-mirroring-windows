@@ -19,3 +19,9 @@ Traced selected externalized LocalAuthentication context calls, authentication t
 Located conditional local/attested long-term-key selection and concrete AppleKeyStore session creation, token and step calls. The full current-flow route, attestation policy, enrollment transcript and iPhone verifier remain incomplete. New findings include explicit confidence and interpretation limits.
 
 Next: current iPhone long-term-key/attestation acceptance for an independently enrolled software host. See the [follow-up report](authentication.md).
+
+### Trusted keys and attestation
+
+Corroborated the selected pairing class's type field and attestation mask, plus the external-to-internal request type table. The selected attested signing-key generator supplies activation DCRT to AppleKeyStore; selected peer setup delegates to its driver boundary. These findings strengthen the evidence against simply substituting ordinary Windows software keys.
+
+Exact iOS 27.0 build 24A437 metadata, kernel, AppleSEPKeyStore driver and encrypted SEP carrier are source-bound. iPhone sharingd and the plaintext SEP verifier have not been obtained. Additional disk headroom and a working filesystem extraction route are needed. No independent host acceptance result exists. See the [key/attestation report](key-attestation.md).

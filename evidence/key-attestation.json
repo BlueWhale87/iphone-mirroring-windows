@@ -1,0 +1,271 @@
+{
+  "date": "2026-10-14",
+  "scope": "Curated static key/attestation investigation. Source records remain local. No iPhone verifier or Windows-origin enrollment tested.",
+  "artifacts": {
+    "sharingd-arm64e": {
+      "sha256": "9ff05d2e792ee3a2da5007bca4a772ca5599ef4ad2abd8571559f161ee6a6ba4",
+      "uuid": "D547B79C-1EB7-3A1C-A9A2-20D3D1BE6A7F",
+      "original_REA_evidence_id": "ev_61ca3529f619d5c37da9b28d93f449f698e3445a1d352d132cd7abf07a1d455a"
+    },
+    "AppleKeyStore": {
+      "sha256": "25ee96529f429f06fc0b761fdcac2d47207467f86aba1b98db0bde4637f71d7a",
+      "uuid": "E444621A-C72D-36A2-AA52-9E9FAFA7B42D",
+      "original_REA_evidence_id": "ev_eb198719792c4ab9081382325aee782a06b27196bb37d1488adbf070144296d4",
+      "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413",
+      "source_image": "/System/Library/PrivateFrameworks/AppleKeyStore.framework/Versions/A/AppleKeyStore"
+    },
+    "iPhone-AppleSEPKeyStore": {
+      "sha256": "622d1d8f83375c079278729c46397b1b068fc5649e24b8a4f47d858e590f01ab",
+      "uuid": "0E27B07B-3F8B-3950-B0EE-DEDBBD1DB0FE",
+      "original_REA_evidence_id": "ev_13d1502886780f385aaa2a03b07f83aae83b5630cc0dac269f3f0a84af0b98d4",
+      "source_kernel_sha256": "a36b924108b63eefd7cc8fa9e54acc3a07544786d3edb316fbcf3b9fb7426b35",
+      "source_kernel_carrier_sha256": "a1844ca958421bb8b878ed38c4f3033293baef6302c7bc4cf7b88266e5d7e5af",
+      "carrier_sha384_matches_manifest": true,
+      "extracted_text_matches_original": true,
+      "product": "iPhone17,1",
+      "version": "27.0",
+      "build": "24A437"
+    },
+    "iPhone-SEP-firmware": {
+      "carrier_sha256": "2916c0d68b34ae8f1ef322f950e730144c2761cff25136d98966f268e6bed096",
+      "payload_type": "sepi",
+      "parser_reports_encrypted": true,
+      "payload_size": 7667712,
+      "raw_payload_sha256": "82f96d60b04a841f6410a7bda1c2bdf57327bd89cf15994b2ab007069db1c5ce",
+      "carrier_sha384_matches_manifest": true,
+      "version": "27.0",
+      "build": "24A437",
+      "product": "iPhone17,1"
+    }
+  },
+  "observations": [
+    {
+      "id": "external-type-conversion",
+      "status": "answered",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "Enrollment adapter forwards its request type into a conversion helper. The helper maps external types 5 and 6 to internal values 5 and 6.",
+      "sources": [
+        {
+          "original_local_record": "external-type-conversion.json",
+          "address": "0x1001ec924",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "type-conversion-table.json",
+          "address": "0x100771310",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "../authentication-followup/manager-request-enrollment-implementation.json",
+          "address": "0x10024c3dc",
+          "source_artifact": "sharingd-arm64e"
+        }
+      ],
+      "limits": [
+        "Conversion alone does not prove every subsequent dispatch route."
+      ]
+    },
+    {
+      "id": "selected-pairing-attestation-policy",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "SDAuthenticationAKSPairingSession type field is linked through source Objective-C metadata and chained-fixup pointer identities to the offset variable read by pairing creation. The creation call requests attestation for internal type 5 (and 6), using a type<21 test and mask 0x1800e0. The called constructor selects localAttestedLTK when attestation is requested; a missing local key takes its error path, with no ordinary-key fallback in that constructor.",
+      "sources": [
+        {
+          "original_local_record": "pairing-type-field-identity.json",
+          "address": "0x1008930d8",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "pairing-type-field-references.json",
+          "address": "0x1003de758",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "../authentication-followup/modern-pairing-aks-creation.json",
+          "address": "0x1003de78c",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "../authentication-followup/aks-pairing-constructor.json",
+          "address": "0x1000be0b4, 0x1000be0b8, 0x1000be104, 0x1000be184",
+          "source_artifact": "sharingd-arm64e"
+        }
+      ],
+      "limits": [
+        "The runtime-initialized field displacement is not read from zero-fill file offset 0.",
+        "No fresh runtime reachability observation or proof that all current enrollment routes use this class."
+      ]
+    },
+    {
+      "id": "attested-key-generation",
+      "status": "answered for selected generator",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "Attested generation reads DCRT through MAECopyDCRTMacOSWithError, adds its bytes as AKS parameter 0x15 and value 4 as parameter 0x14, serializes parameters and calls aks_create_signing_key_with_params. Ordinary generation has a separate aks_create_signing_key branch. Missing DCRT takes an error path in the selected helper.",
+      "sources": [
+        {
+          "original_local_record": "ltk-create-helper.json",
+          "address": "0x1001648ec, 0x10016499c, 0x100164c20",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "generate-ltk-block.json",
+          "address": "0x1000c0bbc",
+          "source_artifact": "sharingd-arm64e"
+        }
+      ],
+      "limits": [
+        "Parameter names and certificate contents are not reconstructed.",
+        "No activation request or key-generation API executed."
+      ]
+    },
+    {
+      "id": "activation-refresh",
+      "status": "answered for selected callback path",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "The optional generation completion path invokes a helper calling MAEIssueDCRTMacOSWithCallback. The completion block reports activation errors and only invokes its generation block on success.",
+      "sources": [
+        {
+          "original_local_record": "generate-local-ltk.json",
+          "address": "0x1000c09a0",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "dcrt-fetch-helper.json",
+          "address": "0x100164fb4",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "dcrt-completion-block.json",
+          "address": "0x1000c0fa4",
+          "source_artifact": "sharingd-arm64e"
+        }
+      ],
+      "limits": [
+        "The callback path is conditional; not every generation requests a fresh DCRT."
+      ]
+    },
+    {
+      "id": "key-registration-boundary",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "Selected remote-key storage/signing code chooses a local attested key for its signing helper; separate production helpers call aks_remote_peer_setup. The peer-setup API wrapper selects operation 0x2e and reaches IOConnectCallMethod through an outlined helper.",
+      "sources": [
+        {
+          "original_local_record": "sign-and-store-remote-ltk.json",
+          "address": "0x1000c38d8",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "peer-validation-modern.json",
+          "address": "0x10045ed00",
+          "source_artifact": "sharingd-arm64e"
+        },
+        {
+          "original_local_record": "aks-peer-setup-cache.json",
+          "address": "0x234cadcb4",
+          "source_artifact": "AppleKeyStore"
+        },
+        {
+          "original_local_record": "aks-peer-setup-dispatch-cache.json",
+          "address": "0x234cad670",
+          "source_artifact": "AppleKeyStore"
+        },
+        {
+          "original_local_record": "aks-iokit-outlined-cache.json",
+          "address": "0x234c5c630",
+          "source_artifact": "AppleKeyStore"
+        },
+        {
+          "original_local_record": "applekeystore-cache-symbols.txt",
+          "address": "0x234cb4030",
+          "source_artifact": "AppleKeyStore"
+        }
+      ],
+      "limits": [
+        "These are Mac-side boundaries. The driver/Secure Enclave certificate validation policy and the iPhone implementation remain unrecovered.",
+        "Whole current enrollment reachability and certificate chain validation are not established."
+      ]
+    },
+    {
+      "id": "exact-iphone-artifact",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for the selected static boundary",
+      "conclusion": "Apple-hosted BuildManifest identifies iPhone17,1, iOS 27.0 build 24A437. AppOS was acquired separately and matches its manifest SHA-384; it is not the requested sharingd executable. Daemon extraction stopped without obtaining sharingd.",
+      "sources": [
+        {
+          "original_local_record": "iphone-manifest-extraction.json",
+          "source_artifact": "iPhone firmware metadata/component"
+        },
+        {
+          "original_local_record": "iphone-appos-extraction.json",
+          "source_artifact": "iPhone firmware metadata/component"
+        }
+      ],
+      "limits": [
+        "Public metadata/component access does not establish iPhone attestation policy.",
+        "File search stalled at AppOS mounting; broader filesystem acquisition also needs additional disk headroom."
+      ]
+    },
+    {
+      "id": "windows-acceptance",
+      "status": "unresolved",
+      "evidence_type": "inference",
+      "confidence": "unknown for peer acceptance; stronger evidence against a straightforward software-only port",
+      "conclusion": "The selected native enrollment path uses Apple activation DCRT and attested AKS signing-key material. Generating an ordinary Windows software key does not reproduce that path. Evidence does not yet establish whether the stock iPhone allows a compatible alternative.",
+      "sources": [],
+      "limits": [
+        "No fresh Windows enrollment, complete peer transcript, iPhone verifier or exhaustive fallback policy.",
+        "Current evidence supports an incompatibility hypothesis for ordinary software keys, not a universal impossibility proof."
+      ]
+    },
+    {
+      "id": "exact-iphone-key-driver",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for artifact identity and text equality; metadata is a search seed",
+      "conclusion": "Exact-build AppleSEPKeyStore was recovered from the firmware kernel. Original kernel carrier matches manifest SHA-384; independently decompressed bytes match the analyzed kernel; all extracted driver text bytes match the source fileset. C++ metadata locates AppleKeyStoreUserClient, but its certificate verification policy is not recovered.",
+      "sources": [
+        {
+          "original_local_record": "iphone-kernel-provenance.json",
+          "source_artifact": "iPhone-AppleSEPKeyStore"
+        },
+        {
+          "original_local_record": "iphone-key-userclient-cpp.json",
+          "source_artifact": "iPhone-AppleSEPKeyStore"
+        }
+      ],
+      "limits": [
+        "Unnamed vtable entries and local remote-session entitlement string references do not establish remote host acceptance.",
+        "One bounded method excerpt is saved without assigning it an unverified protocol role."
+      ]
+    },
+    {
+      "id": "exact-iphone-sep-payload",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for manifest digest and carrier encryption metadata; unknown for internal policy",
+      "conclusion": "Exact-build SEP firmware carrier matches manifest SHA-384. Its sepi payload is reported encrypted by the format parser. Raw payload extraction does not recover its plaintext application layout or peer certificate policy.",
+      "sources": [
+        {
+          "original_local_record": "iphone-sep-provenance.json",
+          "source_artifact": "iPhone-SEP-firmware"
+        },
+        {
+          "original_local_record": "iphone-sep-im4p-info.json",
+          "source_artifact": "iPhone-SEP-firmware"
+        }
+      ],
+      "limits": [
+        "Wrapped carrier keybag fields are not plaintext AES keys.",
+        "Layout-parser failures on carrier and raw ciphertext are not evidence of peer rejection or Windows impossibility."
+      ]
+    }
+  ]
+}

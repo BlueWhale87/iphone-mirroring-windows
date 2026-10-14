@@ -58,3 +58,7 @@ Acceptance requires a reproducible Windows-origin session that streams an app an
 The deliverables support a focused next investigation. They do not establish native Windows parity or universal impossibility.
 
 Public evidence is a curated export. Referenced original local dossiers, screenshots and raw diagnostics are not included; source identities and selected observations are provided in the evidence directory.
+
+## Key/attestation follow-up
+
+The [selected pairing/key implementations](key-attestation.md) now show an attestation bit for mirroring pairing type 5, Apple activation DCRT passed into attested signing-key creation, and a peer-setup driver boundary. Ordinary software-key substitution does not reproduce those implementations. A universal Windows rejection remains unproven: complete current-route reachability, iPhone certificate checks and any permitted alternative enrollment remain unresolved. The exact-build iPhone key driver and encrypted SEP carrier are acquired; sharingd filesystem acquisition is pending additional disk headroom and a working extraction route. The plaintext SEP verifier is unavailable.
