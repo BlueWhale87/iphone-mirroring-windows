@@ -1,6 +1,6 @@
 # Can Windows enroll its own trusted keys?
 
-14 October 2026. **An ordinary Windows software key does not reproduce the selected native enrollment path. Stock iPhone acceptance remains untested.** The new evidence narrows the problem to attested key generation and peer enrollment, rather than just implementing an encryption handshake.
+14 October 2026. **An ordinary Windows software key does not reproduce the selected native enrollment path. Stock iPhone acceptance remains untested.** The new evidence narrows the problem to attested key generation and peer enrollment, rather than just implementing an encryption handshake. A [subsequent peer acquisition](secure-enclave-options.md) obtained exact-build iPhone sharingd after storage cleanup; the acquisition limits below describe this earlier pass.
 
 ## Selected pairing policy
 

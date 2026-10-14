@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-14",
+  "scope": "Curated exact-build iPhone artifact and selected pairing-boundary export. No Windows-origin or complete mirroring-flow test.",
+  "artifacts": {
+    "iPhone-sharingd": {
+      "sha256": "8c239cdd85d12e1e931ec3c1f67e5d0753b960a1bfed0a7d5938bfb23efc47c1",
+      "uuid": "D3F03707-C9CF-3291-810F-DD6CB2905D89",
+      "architecture": "arm64e",
+      "original_REA_evidence_id": "ev_ce896453efa3da562c8d4429ec452f6280bb895ee7bf5b8bda1925d6f0fbb846",
+      "version": "27.0",
+      "build": "24A437",
+      "source_path_within_image": "usr/libexec/sharingd",
+      "source_copy_bytes_equal": true
+    },
+    "filesystem": {
+      "component": "043-70165-659.dmg.aea",
+      "carrier_sha256": "233056b8cb70bf6428482fdbe0454e86b64181137e590a22374f58eee93ac831",
+      "carrier_zip_crc32_matches": true,
+      "carrier_zip_size_matches": true,
+      "decrypted_sha256": "45a8273bc13ab855b156eac924571d4e5b724067b4fe74ab7f7ec0081f09bd4c",
+      "decrypted_sha384_matches_manifest_OS_digest": true,
+      "digest_coverage": "The manifest OS SHA384 matches decrypted image bytes, not encrypted carrier bytes; verified for this component."
+    }
+  },
+  "observations": [
+    {
+      "id": "selected-iphone-lock-session-attestation",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for selected method constants; unknown for current mirroring reachability",
+      "conclusion": "SDAutoUnlockPairingLockSession.useAttestedProtocol returns true. Its handleDeviceAuthenticationSetupRequest passes requiresAttestation=1 and originator=0 to AKS pairing construction.",
+      "sources": [
+        {
+          "original_local_record": "iphone-use-attested-protocol.json",
+          "address": "0x10006b808"
+        },
+        {
+          "original_local_record": "iphone-device-authentication-request.json",
+          "address": "0x10006d57c"
+        },
+        {
+          "original_local_record": "iphone-selector-map.json"
+        }
+      ],
+      "limits": [
+        "This is a selected legacy pairing lock-session path; its use by current iPhone Mirroring is not established.",
+        "Two direct source BL call sites are inventoried; indirect/modern dispatch is not covered by that count."
+      ]
+    },
+    {
+      "id": "selected-iphone-key-choice",
+      "status": "partial",
+      "evidence_type": "static",
+      "confidence": "high for selected branch and error path",
+      "conclusion": "The called iPhone constructor chooses localAttestedLTK when attestation is requested. Missing local or remote key takes an error path; no ordinary-key fallback is present within this constructor.",
+      "sources": [
+        {
+          "original_local_record": "iphone-aks-pairing-constructor.json",
+          "address": "0x100122728, 0x10012272c, 0x10012276c, 0x100122838"
+        },
+        {
+          "original_local_record": "iphone-selector-map.json"
+        }
+      ],
+      "limits": [
+        "Does not establish every peer-enrollment path or Apple certificate-verifier internals."
+      ]
+    },
+    {
+      "id": "independent-windows-enrollment",
+      "status": "unresolved",
+      "evidence_type": "inference",
+      "confidence": "unknown",
+      "conclusion": "The exact peer daemon is now acquired. Selected iPhone boundaries also use attestation, but complete mirroring reachability, certificate policy and any compatible software enrollment route remain unverified.",
+      "sources": [],
+      "limits": [
+        "No fresh pairing, credential export, SEP modification, replay or Windows-origin session."
+      ]
+    }
+  ],
+  "verification": {
+    "source_instruction_validation": "instruction-validation.json",
+    "filesystem_manifest_digest_scope_verified": true,
+    "daemon_copy_verified": true
+  },
+  "next_check": "Trace modern/current mirroring enrollment into peer key acceptance and its attestation failure handling."
+}

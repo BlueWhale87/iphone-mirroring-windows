@@ -25,3 +25,9 @@ Next: current iPhone long-term-key/attestation acceptance for an independently e
 Corroborated the selected pairing class's type field and attestation mask, plus the external-to-internal request type table. The selected attested signing-key generator supplies activation DCRT to AppleKeyStore; selected peer setup delegates to its driver boundary. These findings strengthen the evidence against simply substituting ordinary Windows software keys.
 
 Exact iOS 27.0 build 24A437 metadata, kernel, AppleSEPKeyStore driver and encrypted SEP carrier are source-bound. iPhone sharingd and the plaintext SEP verifier have not been obtained. Additional disk headroom and a working filesystem extraction route are needed. No independent host acceptance result exists. See the [key/attestation report](key-attestation.md).
+
+### iPhone peer acquisition and Secure Enclave options
+
+Storage cleanup removed about 10.9 GB of regenerable caches. Obtained exact-build iPhone sharingd from a verified, decrypted, read-only filesystem image. The manifest OS digest covers the decrypted image; independent ZIP size/CRC checks bind the encrypted carrier.
+
+Selected legacy pairing lock-session code returns an attestation flag and passes requiresAttestation=1; its constructor selects an attested local key. Current mirroring reachability and complete peer acceptance remain unverified. See [the next checks](secure-enclave-options.md).
