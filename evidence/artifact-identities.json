@@ -1,0 +1,49 @@
+{
+  "reference_date": "2026-10-14",
+  "macos_build": "25G83",
+  "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413",
+  "architecture": "arm64e",
+  "artifacts": [
+    {
+      "name": "iPhone Mirroring executable",
+      "sha256": "f358dd7315c53e36dabb8fd343db86a09b879a7845c078d02440744dbc8b0815",
+      "derived_arm64e_sha256": "b490b45a463321b250d38a2807013ca0a6609e32da4d8b625ccea3251d68a17c",
+      "source_range": {
+        "offset": 196608,
+        "size": 201696
+      },
+      "transformation": "lipo -thin arm64e"
+    },
+    {
+      "name": "ScreenContinuityUI",
+      "sha256": "4502857e7650fe8d712e85f912f77d3863debbb983074410a70328232267521d",
+      "derived_arm64e_sha256": "ddb5c9c164bb989d4d9ca975d8b020d71dca0827e210df3310b04326a3cecfae",
+      "source_range": {
+        "offset": 1474560,
+        "size": 1597808
+      },
+      "byte_equality_verified": true
+    },
+    {
+      "image_name": "ScreenSharingKit",
+      "cache_image_uuid": "63300708-7315-32AF-AA0A-69479E73BA96",
+      "original_image_path": "/System/Library/PrivateFrameworks/ScreenSharingKit.framework/Versions/A/ScreenSharingKit",
+      "derived_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "transformation": "ipsw 3.1.737 dyld extract --slide --objc"
+    },
+    {
+      "image_name": "ScreenContinuityServices",
+      "cache_image_uuid": "4C43521B-5915-39E5-805F-5D4080A89B00",
+      "original_image_path": "/System/Library/PrivateFrameworks/ScreenContinuityServices.framework/Versions/A/ScreenContinuityServices",
+      "derived_sha256": "eedefcafea85582d7c3d22243eb08453a2266548f623236d86cbd428951674a4",
+      "transformation": "ipsw 3.1.737 dyld extract --slide --objc"
+    }
+  ],
+  "tool_versions": {
+    "REA": "6.4.0",
+    "Ghidra": "12.1.4",
+    "Java": "21.0.10",
+    "ipsw": "3.1.737"
+  },
+  "scope": "Identity/provenance metadata only; binaries, extracted frameworks and tools are not distributed."
+}

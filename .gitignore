@@ -1,0 +1,12 @@
+.DS_Store
+.tools/
+sources/
+raw/
+extracted/
+*.a2s
+*.ndjson
+*.dylib
+*.zip
+*.tar.gz
+*.gpr
+*.rep/

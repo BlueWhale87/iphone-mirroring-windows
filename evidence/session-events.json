@@ -1,0 +1,187 @@
+{
+  "type": "native_unified_log_observation",
+  "command": "/usr/bin/log show --last 5m --style ndjson --info --predicate process == iPhone Mirroring and eventMessage contains connect/auth/session",
+  "record_count": 341,
+  "first_record": "2026-10-14 18:50:45.579057+1000",
+  "last_record": "2026-10-14 18:54:16.087501+1000",
+  "selection": "First matching event for each named phase; transient UUIDs and IP addresses omitted. Some entries are summaries, not quotations.",
+  "events": [
+    {
+      "id": "local-check",
+      "timestamp": "2026-10-14 18:51:37.881747+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "14. Checking if local authentication is required",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 10
+    },
+    {
+      "id": "local-required",
+      "timestamp": "2026-10-14 18:51:37.883248+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "15.2 Local Authentication is required",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 12
+    },
+    {
+      "id": "local-authorized",
+      "timestamp": "2026-10-14 18:52:19.070488+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "16.2 Got an authorization, stashing for later unlock",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 47
+    },
+    {
+      "id": "local-complete",
+      "timestamp": "2026-10-14 18:52:19.070878+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "17. Local Authentication is complete, let's start this party",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 48
+    },
+    {
+      "id": "discovery-start",
+      "timestamp": "2026-10-14 18:52:19.119602+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "MediaTransport",
+      "message": "Activating MediaTransportClientSession: Starting device discovery for [session/device identifier omitted]",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 51
+    },
+    {
+      "id": "control-id",
+      "timestamp": "2026-10-14 18:52:25.772154+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "MediaTransport",
+      "message": "MediaTransportControlStream initialized with streamID:com.apple.oneness.sessionAndHIDMessages",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 65
+    },
+    {
+      "id": "awdl-connected",
+      "timestamp": "2026-10-14 18:52:26.257831+1000",
+      "subsystem": "com.apple.CoreUtils",
+      "category": "CUTCPConnection",
+      "message": "Connected over IPv6 link-local addresses on awdl0, AWDL; observed remote port 64473 and local port 61526. Addresses omitted; ports are session-specific.",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 88
+    },
+    {
+      "id": "control-active",
+      "timestamp": "2026-10-14 18:52:26.281021+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "20. ScreenSharingSession activated the control stream",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 93
+    },
+    {
+      "id": "protocol-version",
+      "timestamp": "2026-10-14 18:52:26.371122+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenSharingKit",
+      "message": "Connected to remote device using protocol version: 6",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 95
+    },
+    {
+      "id": "startup-config",
+      "timestamp": "2026-10-14 18:52:26.371179+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "21. ScreenSharingSession is sending its startup configuration to the server",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 96
+    },
+    {
+      "id": "peer-version",
+      "timestamp": "2026-10-14 18:52:26.373456+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenSharingKit",
+      "message": "Connecting to server with configuration: ParticipantVersion(protocolVersion: 6, platform: ScreenSharingKit.Platform.iPhone, osBuild: \"24A437\", userAssignedDeviceName: \"iPhone\", capabilities: Optional(ScreenSharingKit.Capabilities(rawValue: 31)))",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 97
+    },
+    {
+      "id": "remote-unlock-request",
+      "timestamp": "2026-10-14 18:52:26.413669+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "22. ScreenSharingSession has requested unlock of the device",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 102
+    },
+    {
+      "id": "local-revalidated",
+      "timestamp": "2026-10-14 18:52:26.421009+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "22.6. Local authorization is valid, attempting to unlock the device",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 104
+    },
+    {
+      "id": "remote-auth-start",
+      "timestamp": "2026-10-14 18:52:26.520924+1000",
+      "subsystem": "com.apple.sharing",
+      "category": "Authentications",
+      "message": "Begin authentication for <private>",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 105
+    },
+    {
+      "id": "remote-auth-complete",
+      "timestamp": "2026-10-14 18:52:26.918657+1000",
+      "subsystem": "com.apple.sharing",
+      "category": "Authentications",
+      "message": "Notifying client authentication completed for <private>",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 111
+    },
+    {
+      "id": "media-start",
+      "timestamp": "2026-10-14 18:52:26.919019+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "24. ScreenSharingSession is activating the audio/video streams",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 112
+    },
+    {
+      "id": "media-active",
+      "timestamp": "2026-10-14 18:52:27.179717+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "25. ScreenSharingSession activated the audio/video streams, awaiting final readiness",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 182
+    },
+    {
+      "id": "onscreen-ready",
+      "timestamp": "2026-10-14 18:52:28.008859+1000",
+      "subsystem": "com.apple.screensharing",
+      "category": "ScreenContinuityApp",
+      "message": "26. ScreenSharingSession was told the device is ready to be on screen, oblige it",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 187
+    },
+    {
+      "id": "wifi-reservation-error",
+      "timestamp": "2026-10-14 18:52:27.053795+1000",
+      "subsystem": "",
+      "category": "",
+      "message": "AWDL traffic reservation reports wifip2pd resource busy (NSPOSIXErrorDomain 16); later media activation/readiness is also logged.",
+      "source_file": "app-session-diagnostics.ndjson",
+      "source_line": 162
+    }
+  ],
+  "limits": [
+    "Logs report client-side operations; no debugger-observed call stack or server verifier.",
+    "No packet capture or decrypted wire payload.",
+    "Not a deliberately failed authentication experiment."
+  ],
+  "publication_notice": "Redacted derived event selection. Referenced raw diagnostic file is not included."
+}

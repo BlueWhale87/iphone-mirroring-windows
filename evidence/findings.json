@@ -1,0 +1,329 @@
+{
+  "stage": "First-phase assessment; partial map and explicit unresolved prerequisites",
+  "compatibility_outcome": "candidate approach identified",
+  "questions": [
+    {
+      "id": "session-entry",
+      "question": "How is a mirroring session created?",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "The app/UI imports ScreenSharingSession operations. The media-backed vendor references ScreenSharingSession. Runtime logs corroborate local approval, control activation, remote authentication and media readiness.",
+      "sources": [
+        {
+          "file": "session-analysis/media-session-vendor.json",
+          "evidence_id": "ev_c6517be4cf3798f6152ff9f8a7cb43ecc6677a0b3ec1cc13cb73b534464d83e6",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "provider_architecture": "arm64",
+          "procedure": "0x267360c5c",
+          "architecture": "arm64e"
+        },
+        {
+          "file": "session-analysis/media-session-vendor-source.json",
+          "procedure": "0x267360c5c",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screencontinuityui-session-procedures.json",
+          "evidence_id": "ev_2c8c5e40e330f510d79d150ec03154e804d20294c6b8a742044ccb5af8188033",
+          "binary_sha256": "ddb5c9c164bb989d4d9ca975d8b020d71dca0827e210df3310b04326a3cecfae",
+          "provider_architecture": "arm64"
+        },
+        {
+          "file": "runtime/session-events.json"
+        }
+      ],
+      "limitations": [
+        "The vendor dossier is truncated by imported-stub mislabeling.",
+        "No complete app-to-service call graph or remote server implementation."
+      ],
+      "next_check": "Trace the authorization/enrollment chain before a Windows client."
+    },
+    {
+      "id": "discovery",
+      "question": "How is the peer discovered and eligibility determined?",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Production metadata declares RPRemoteDisplayDiscovery with status/RSSI filters. Its source method installs discovery callbacks; runtime logs begin device discovery.",
+      "sources": [
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 2875,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "session-analysis/device-discovery-source.json",
+          "procedure": "0x26746ebe0",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screensharingkit-objc-stub-selector-map.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "runtime/session-events.json"
+        }
+      ],
+      "limitations": [
+        "Advertisement bytes, account filtering and full eligibility policy are unknown.",
+        "ScreenContinuityServices Swift parsing reports partial protocol-description errors."
+      ],
+      "next_check": "Recover concrete discovery criteria and transport endpoint handoff."
+    },
+    {
+      "id": "session-trust",
+      "question": "What authorizes locked-screen interaction?",
+      "status": "partial",
+      "evidence_type": "runtime",
+      "conclusion": "The reconnect log reports local authorization, control startup, local revalidation and Sharing authentication completion before media activation. The Mac adapter owns SFAuthenticationManager and pairing/unlock continuations.",
+      "sources": [
+        {
+          "file": "runtime/session-events.json"
+        },
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 759,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "session-analysis/authentication-vendor.json",
+          "evidence_id": "ev_3449cffa9b9b1c84e4a48b219e46f086be42dfac8b4f918f336acf12e8afd257",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "provider_architecture": "arm64",
+          "procedure": "0x26736eb58",
+          "architecture": "arm64e"
+        },
+        {
+          "file": "session-analysis/authentication-helper-body-source.json",
+          "procedure": "0x26739f030",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        }
+      ],
+      "limitations": [
+        "A listCandidateDevices call does not establish the pairing protocol.",
+        "Token bytes, key origin, account/host binding and iPhone verification unknown.",
+        "Mac entitlements do not prove remote host/hardware checks."
+      ],
+      "next_check": "Follow the concrete SFAuthenticationManager/Sharing enrollment and token-verification chain."
+    },
+    {
+      "id": "enrollment",
+      "question": "Can a fresh Windows host enroll without transplanting Mac trust?",
+      "status": "unresolved",
+      "evidence_type": "inference",
+      "conclusion": "No fresh host enrollment or Windows-origin authentication was performed.",
+      "sources": [
+        {
+          "file": "session-analysis/pair-device-async-entry.json",
+          "evidence_id": "ev_0b9ede5f46ad5021d17b14b991c11af383632a440d85b4018f994218d353d410",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "provider_architecture": "arm64",
+          "procedure": "0x2673a0ba4",
+          "architecture": "arm64e"
+        },
+        {
+          "file": "session-analysis/unlock-with-token-async-entry.json",
+          "evidence_id": "ev_5d3d055ad4ed3aca4ea9f1e948660a7496adf6f57e9aa46d126e0d4f3cbf9e41",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "provider_architecture": "arm64",
+          "procedure": "0x2673a1500",
+          "architecture": "arm64e"
+        }
+      ],
+      "limitations": [
+        "Only an already-enrolled Mac was tested.",
+        "Async continuations are only partly followed; Ghidra stub issue remains."
+      ],
+      "next_check": "Recover enrollment operation, persistent key lookup and identity binding."
+    },
+    {
+      "id": "session-transport",
+      "question": "What carried this reference connection?",
+      "status": "answered",
+      "evidence_type": "runtime",
+      "conclusion": "One logged connection uses IPv6 link-local addresses on awdl0, labeled AWDL; the client reports control protocol version 6 and stream ID com.apple.oneness.sessionAndHIDMessages.",
+      "sources": [
+        {
+          "file": "runtime/session-events.json"
+        }
+      ],
+      "limitations": [
+        "Answer applies only to the selected Mac reference.",
+        "Observed ports are transient, not a fixed service contract.",
+        "No complete Rapport framing, crypto or transport fallback recovered."
+      ],
+      "next_check": "Determine authenticated transport requirements and whether a Windows-accessible route exists."
+    },
+    {
+      "id": "serialization",
+      "question": "What serialization boundary exists?",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Source code calls PropertyListEncoder.encode at 0x2673f4798 and PropertyListDecoder.decode at 0x2673f33c8 within the Mac control implementation.",
+      "sources": [
+        {
+          "file": "media-input-analysis/control-message-send-body-source.json",
+          "procedure": "0x2673f4688",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "media-input-analysis/control-message-decode-source.json",
+          "procedure": "0x2673f3254",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screensharingkit-cache-stubs-symbols.txt",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "media-input-analysis/property-list-call-sites.json"
+        }
+      ],
+      "limitations": [
+        "Writer/reader end-to-end path, plist format settings, framing and full object graph are unresolved.",
+        "CodingKeys alone are not wire-layout proof."
+      ],
+      "next_check": "Recover the typed payload at both encoder and decoder and the ControlTransport send/receive boundary."
+    },
+    {
+      "id": "video",
+      "question": "How is video negotiated and decoded?",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Production MediaTransportVideoStream declares AVC negotiation/client/stream types. A source method uses network-socket and NWConnection-client transport constructors on separate branches; runtime logs reach audio/video readiness.",
+      "sources": [
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 2436,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "media-input-analysis/video-activation-candidate-source.json",
+          "procedure": "0x26744db30",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screensharingkit-objc-stub-selector-map.json",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "runtime/session-events.json"
+        }
+      ],
+      "limitations": [
+        "Observed branch, codec, negotiated values, media framing and protection unresolved.",
+        "The Ghidra method dossier is incomplete."
+      ],
+      "next_check": "After trust/transport are resolved, recover negotiation writer/reader and frame/decoder parameters."
+    },
+    {
+      "id": "input",
+      "question": "How are pointer, scroll, keyboard and text represented?",
+      "status": "partial",
+      "evidence_type": "static",
+      "conclusion": "Production metadata distinguishes system gestures, HID reports/device updates and RTI session/text messages. Native UI accepts clicks and typed search text.",
+      "sources": [
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 1645,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 2424,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "screensharingkit-cache-swift.txt",
+          "line": 1925,
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "architecture": "arm64e",
+          "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413"
+        },
+        {
+          "file": "media-input-analysis/focused-boundaries-procedures.json",
+          "evidence_id": "ev_2de551c76af109fee8e7f959c3360d0478fe0b4e68d39a61fee044c871d579ff",
+          "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+          "provider_architecture": "arm64"
+        },
+        {
+          "file": "runtime/ui-observations.json"
+        }
+      ],
+      "limitations": [
+        "HID bytes, button/coordinate/scroll/key mapping, orientation and text payloads unresolved.",
+        "Scroll automation produced no visible list movement.",
+        "UI actions do not identify their wire representation."
+      ],
+      "next_check": "Recover UniversalHID report construction and RTI serialization, then validate against input-specific observations."
+    },
+    {
+      "id": "teardown",
+      "question": "What ends a session and how does reconnect behave?",
+      "status": "partial",
+      "evidence_type": "runtime",
+      "conclusion": "The native window reports session termination due to iPhone use and requires locking. After user-confirmed lock and Mac authentication, a live connection resumes.",
+      "sources": [
+        {
+          "file": "runtime/ui-observations.json"
+        },
+        {
+          "file": "reference-session.json"
+        }
+      ],
+      "limitations": [
+        "Physical screen state is user-confirmed.",
+        "Teardown wire messages, key reuse and automatic reconnect were not traced."
+      ],
+      "next_check": "Trace invalidation/teardown callbacks and observe a deliberately closed client session if needed."
+    },
+    {
+      "id": "windows",
+      "question": "Can a direct Windows session provide native parity?",
+      "status": "unresolved",
+      "evidence_type": "inference",
+      "conclusion": "Candidate reconstruction path identified, but no Windows-origin authenticated session, video or input test exists.",
+      "sources": [],
+      "limitations": [
+        "Authentication/enrollment and transport remain unresolved.",
+        "No Windows test host is connected."
+      ],
+      "next_check": "Run the focused authorization/enrollment experiment in windows-compatibility.md before designing a minimal Windows probe."
+    }
+  ],
+  "reference_device": {
+    "model": "iPhone 16 Pro",
+    "ios_version": "27.0",
+    "ios_build": "24A437",
+    "source": "reference-session.json"
+  },
+  "coverage": "Mac implementation and selected native runtime events; no Windows or iPhone-server execution.",
+  "publication_notice": "Curated findings export. Source filenames refer to local original records, which are not included. REA Evidence IDs identify originals, not these derived exports."
+}

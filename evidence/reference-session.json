@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-14",
+  "mac": {
+    "os_version": "26.6.2",
+    "build": "25G83",
+    "architecture": "arm64"
+  },
+  "app": {
+    "bundle_id": "com.apple.ScreenContinuity",
+    "version": "1.6",
+    "build": "98.5",
+    "executable_sha256": "f358dd7315c53e36dabb8fd343db86a09b879a7845c078d02440744dbc8b0815"
+  },
+  "iphone": {
+    "model": "iPhone 16 Pro",
+    "ios_version": "27.0",
+    "build": "24A437",
+    "sources": [
+      "session-events.json (peer-version)"
+    ],
+    "version_recorded_after_initial_observation": true,
+    "build_read_in_native_ui": true
+  },
+  "locked_screen_off": {
+    "independent_physical_observation": false,
+    "scope": "Before the selected reconnect; no claim of camera/lock-state telemetry.",
+    "confirmation": "User confirmed locked with screen off before selected reconnect."
+  },
+  "checks": {
+    "connect": "observed",
+    "app_launch_by_mouse": "observed",
+    "home_navigation": "observed",
+    "short_text_in_search": "observed",
+    "scroll": "unverified",
+    "disconnect_on_phone_use": "observed",
+    "reconnect_after_local_authentication": "observed",
+    "windows_origin": "not_tested"
+  },
+  "uncollected": [
+    "packet capture",
+    "decrypted wire payload",
+    "iPhone server code",
+    "initial fresh host enrollment",
+    "controlled remote authentication failure"
+  ],
+  "result": "Partial native Mac reference baseline; direct Windows compatibility unresolved.",
+  "final_window_state": "Connection Paused (observed after reference tests); left open",
+  "publication_notice": "Derived reference summary; original screenshots and raw UI records are not included."
+}

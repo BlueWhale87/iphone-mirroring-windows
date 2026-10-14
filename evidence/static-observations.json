@@ -1,0 +1,96 @@
+{
+  "type": "derived_static_observation_summary",
+  "source_cache_uuid": "F2E86C53-6052-388B-BA71-5A0C9B569413",
+  "original_raw_files_published": false,
+  "observations": [
+    {
+      "id": "local-auth-result",
+      "observation": "LocalAuthenticationManager.authenticate() async throws -> Foundation.Data is a Mac-side declared operation.",
+      "procedure": "0x26739b874",
+      "local_source": "session-analysis/local-authentication.json",
+      "limit": "Async entry and imported-stub issue do not expose authorization creation or token bytes.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "auth-adapter",
+      "observation": "SharingBackedAuthenticationPrimitives owns SFAuthenticationManager and pairing/unlock/approval continuations. Constructor uses initWithQueue: and setDelegate:.",
+      "procedure": "0x26739e888",
+      "local_source": "screensharingkit-cache-swift.txt:759; session-analysis/sharing-authentication-init-source.json",
+      "limit": "Mac adapter metadata and constructor do not establish the remote trust policy.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "candidate-devices",
+      "observation": "Source body calls listCandidateDevicesForType:completionHandler: at 0x26739f144 through ObjC stub 0x2674f8920.",
+      "procedure": "0x26739f030",
+      "local_source": "session-analysis/authentication-helper-body-source.json; screensharingkit-objc-stub-selector-map.json",
+      "limit": "Candidate-device query, not proof of enrollment exchange.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "control-encode",
+      "observation": "Async body calls PropertyListEncoder.encode at 0x2673f4798, through imported stub 0x2674a4d04.",
+      "procedure": "0x2673f4688",
+      "local_source": "media-input-analysis/control-message-send-body-source.json; screensharingkit-cache-stubs-symbols.txt",
+      "limit": "Complete writer path, format settings and framing unresolved.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "control-decode",
+      "observation": "Source function calls PropertyListDecoder.decode at 0x2673f33c8, through imported stub 0x2674a4cd4.",
+      "procedure": "0x2673f3254",
+      "local_source": "media-input-analysis/control-message-decode-source.json; screensharingkit-cache-stubs-symbols.txt",
+      "limit": "Complete receiver path and object graph unresolved.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "input-types",
+      "observation": "Production metadata declares ControlMessage, HIDMessage/HIDReportMessage and RTIMessage/RTISessionState.",
+      "local_source": "screensharingkit-cache-swift.txt:1645,2364,2424,1925,1915",
+      "declared_fields": {
+        "HIDReportMessage": [
+          "eventID: UInt64?",
+          "sender: EventReportSenderID?",
+          "reportData: Data"
+        ],
+        "RTIMessage": [
+          "sessionID: UUID",
+          "sessionState: RTISessionState"
+        ]
+      },
+      "limit": "Typed declarations are not wire layouts or input-coordinate/HID/text encoding specifications.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "transport-types",
+      "observation": "Production MediaTransportControlStream and MediaTransportClientSession metadata declare RPStreamSession, RPRemoteDisplaySession and WiFiP2P traffic reservation.",
+      "local_source": "screensharingkit-cache-swift.txt:892,1980",
+      "limit": "Metadata does not establish negotiated route, fallback, ports or encryption.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "video-boundary",
+      "observation": "Method calls initWithNetworkSockets:options:error: at 0x26744e240 and initWithNWConnectionClientID:options:error: at 0x26744e510 on separate branches.",
+      "procedure": "0x26744db30",
+      "local_source": "media-input-analysis/video-activation-candidate-source.json; screensharingkit-objc-stub-selector-map.json",
+      "limit": "Observed branch, codec, negotiation and media protection unresolved.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    },
+    {
+      "id": "decompiler-stubs",
+      "observation": "Ghidra marks mislabeled extracted-image imported stubs as no-return, truncating dossiers. Original-cache mappings identify objc_allocWithZone, swift_allocObject, swift_bridgeObjectRetain, swift_once and swift_task_switch.",
+      "local_source": "screensharingkit-cache-stubs-symbols.txt; affected session-analysis/media-input-analysis REA dossiers",
+      "limit": "Source disassembly corroborates selected paths rather than all framework code.",
+      "binary_sha256": "2521568a69fe1638f74fa749d9a89bb133ed9cb015ef5201f1cb9d6ff41838d7",
+      "architecture": "arm64e"
+    }
+  ]
+}
